@@ -20,7 +20,6 @@ public class Driver implements Directions {
 		Scanner world = new Scanner(System.in);
 		Scanner stree = new Scanner(System.in);
 		Scanner ave = new Scanner(System.in);
-		Scanner trouve = new Scanner(System.in);
 		Scanner bees = new Scanner(System.in);
 		System.out.println("Please remember to load world file before running!");
 		System.out.println("Enter world file name");
@@ -30,13 +29,15 @@ public class Driver implements Directions {
 		String tempx = ave.nextLine();
 		System.out.println("Enter street");
 		String tempy = stree.nextLine();
-		System.out.println("Enter Direction");
-		
 		System.out.println("Enter number of Beepers");
 		String tempBeeps = bees.nextLine();
 int x = Integer.parseInt(tempx);
-int y = Integer.parseInt(tempy);
+int y = Integer.parseInt(tempy);	
 int Beeps = Integer.parseInt(tempBeeps);
+world.close();
+stree.close();
+ave.close();
+bees.close();
 
   /**
 	 * This section of code gets info from the user in the following order: 1. Ask the user
@@ -55,7 +56,7 @@ int Beeps = Integer.parseInt(tempBeeps);
 
 		World.readWorld(name);
     World.setVisible(true);
-
+	World.setDelay(1); // you can change the speed
     
 
 
@@ -64,32 +65,89 @@ int Beeps = Integer.parseInt(tempBeeps);
 	 * large, complex task into smaller, easier to solve problems.
 	 */
 	 
-	Robot roomba = new Robot(x, y, dir, Beeps);
+	 roomba = new Robot(x, y, North, Beeps);
 		// the line below causes a null pointer exception
 		// what is that and why are we getting it?
-		roomba.move();
+		int height = 1;
+		int width = 1;
+		while (true)
+		{
+			if (roomba.frontIsClear())
+			{
+				roomba.move();
+				height ++;
+				if(!roomba.frontIsClear())
+				{
+					break;
+				}
+			}
+		
+		}
+		while (true) {
+			if (!roomba.facingNorth())
+			{
+				roomba.turnLeft();
+			}
+			if (roomba.frontIsClear())
+			{
+				roomba.move();
+				width ++;
+				if (!roomba.frontIsClear())
+				{
+					break;
+				}
+			
+		}
+			
+		}
+		while (true) {
+			if (roomba.nextToABeeper()) 
+			{
+				roomba.pickBeeper();
+			} 
+			else if (roomba.frontIsClear()) 
+			{
+				roomba.move();
+				
+				
+				
+			}
+				else  if (!roomba.frontIsClear() && roomba.facingNorth())
+			{
+				roomba.turnLeft();
+				roomba.turnLeft();
+				roomba.turnLeft();
+				roomba.move();
+				roomba.turnLeft();
+				roomba.turnLeft();
+				roomba.turnLeft();
+				
+
+			}
+			else if (!roomba.frontIsClear() && roomba.facingSouth())
+			{
+				roomba.turnLeft();
+				roomba.move();
+				roomba.turnLeft();
+			}
+			else 
+			{break;}
+		}
+	System.out.println("Height : " + height);
+	System.out.println("Width : " + width);
+	int area = height * width;
+	System.out.println("Area : " + area);
+	}
 
 
-  
-
-
-
-
-
-  	/** This method displays the results of cleaning the room.  All of the info
+	/** This method displays the results of cleaning the room.  All of the info
 	 * in the pdf that describes the problem need to be displayed.  You can present
 	 * this info in the console (boring) or you can present using JOptionPane (cool!)
 	 */
-
-    System.out.println("The biggest pile was ");
-
-
-
-
-
+		
 
 
 
   }
 
-}
+
