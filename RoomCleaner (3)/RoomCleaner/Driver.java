@@ -11,7 +11,7 @@ public class Driver implements Directions {
 
 
 	// You will add very many variables!!
-
+// basicRoom.wld
 	
 	public static void main(String[] args) {
 		// LEAVE THIS ALONE!!!!!!
@@ -70,6 +70,10 @@ bees.close();
 		// what is that and why are we getting it?
 		int height = 1;
 		int width = 1;
+		int count = 0;
+		int greatest = 0;
+		int track = 0;
+		int pile = 0;
 		while (true)
 		{
 			if (roomba.frontIsClear())
@@ -84,10 +88,11 @@ bees.close();
 		
 		}
 		while (true) {
-			if (!roomba.facingNorth())
+			while (!roomba.facingEast())
 			{
 				roomba.turnLeft();
 			}
+			
 			if (roomba.frontIsClear())
 			{
 				roomba.move();
@@ -97,16 +102,29 @@ bees.close();
 					break;
 				}
 			
-		}
+			}
+			
 			
 		}
+			roomba.turnLeft();
+			roomba.turnLeft();
+			roomba.turnLeft();
 		while (true) {
 			if (roomba.nextToABeeper()) 
 			{
 				roomba.pickBeeper();
-			} 
+				count++;
+				track++;
+				if (track > greatest)
+				{
+					greatest = track;
+				}
+				pile++;
+			}
+			
 			else if (roomba.frontIsClear()) 
 			{
+				track = 0;
 				roomba.move();
 				
 				
@@ -115,28 +133,38 @@ bees.close();
 				else  if (!roomba.frontIsClear() && roomba.facingNorth())
 			{
 				roomba.turnLeft();
-				roomba.turnLeft();
-				roomba.turnLeft();
 				roomba.move();
 				roomba.turnLeft();
-				roomba.turnLeft();
-				roomba.turnLeft();
+				
 				
 
 			}
 			else if (!roomba.frontIsClear() && roomba.facingSouth())
 			{
 				roomba.turnLeft();
+				roomba.turnLeft();
+				roomba.turnLeft();
 				roomba.move();
+				roomba.turnLeft();
+				roomba.turnLeft();
 				roomba.turnLeft();
 			}
 			else 
-			{break;}
+			{
+				roomba.turnOff();
+				System  . out  . println  ("Room Cleaned");
+				break;
+			}
 		}
 	System.out.println("Height : " + height);
 	System.out.println("Width : " + width);
 	int area = height * width;
 	System.out.println("Area : " + area);
+	System.out.println("Total Beepers Collected : " + count);
+	System.out.println("Greatest number of beepers in a pile : " + greatest);
+	System.out.println("Number of piles : " + pile);
+	System.out.println("Average number of beepers per pile : " + (count/(float)pile) );
+
 	}
 
 
