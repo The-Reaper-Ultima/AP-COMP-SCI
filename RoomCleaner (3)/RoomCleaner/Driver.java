@@ -16,28 +16,15 @@ public class Driver implements Directions {
 	public static void main(String[] args) {
 		// LEAVE THIS ALONE!!!!!!
 		Driver d = new Driver();
-
-		Scanner world = new Scanner(System.in);
-		Scanner stree = new Scanner(System.in);
-		Scanner ave = new Scanner(System.in);
-		Scanner bees = new Scanner(System.in);
-		System.out.println("Please remember to load world file before running!");
-		System.out.println("Enter world file name");
-		String name = world.nextLine();
-		System.out.println("Loading " + name);
-		System.out.println("Enter Avenue");
-		String tempx = ave.nextLine();
-		System.out.println("Enter street");
-		String tempy = stree.nextLine();
-		System.out.println("Enter number of Beepers");
-		String tempBeeps = bees.nextLine();
+	JOptionPane.showMessageDialog(null,"Please remember to load world file before running!");
+	String world = JOptionPane.showInputDialog("Enter world file name");
+	String tempx = JOptionPane.showInputDialog("Enter Avenue");
+	String tempy = JOptionPane.showInputDialog("Enter street");
+	String tempBeeps = JOptionPane.showInputDialog("Enter number of Beepers");	
+	
 int x = Integer.parseInt(tempx);
 int y = Integer.parseInt(tempy);	
 int Beeps = Integer.parseInt(tempBeeps);
-world.close();
-stree.close();
-ave.close();
-bees.close();
 
   /**
 	 * This section of code gets info from the user in the following order: 1. Ask the user
@@ -54,9 +41,9 @@ bees.close();
 
 
 
-		World.readWorld(name);
+		World.readWorld(world);
     World.setVisible(true);
-	World.setDelay(1); // you can change the speed
+	World.setDelay(0); // you can change the speed
     
 
 
@@ -74,6 +61,8 @@ bees.close();
 		int greatest = 0;
 		int track = 0;
 		int pile = 0;
+		int xpos = 0;
+		int ypos = 0;
 		while (true)
 		{
 			if (roomba.frontIsClear())
@@ -118,8 +107,14 @@ bees.close();
 				if (track > greatest)
 				{
 					greatest = track;
+					 xpos = roomba.avenue();
+					 ypos = roomba.street();
+
 				}
-				pile++;
+				if (roomba.nextToABeeper() == false)
+				{
+					pile++;
+				}
 			}
 			
 			else if (roomba.frontIsClear()) 
@@ -156,15 +151,18 @@ bees.close();
 				break;
 			}
 		}
-	System.out.println("Height : " + height);
-	System.out.println("Width : " + width);
-	int area = height * width;
-	System.out.println("Area : " + area);
-	System.out.println("Total Beepers Collected : " + count);
-	System.out.println("Greatest number of beepers in a pile : " + greatest);
-	System.out.println("Number of piles : " + pile);
-	System.out.println("Average number of beepers per pile : " + (count/(float)pile) );
-
+		String newline = "\n";
+		JOptionPane.showMessageDialog(null,"Room Cleaned" + newline + 
+		"Height : " + height + newline + 
+		"Width : " + width + newline + 
+		"Area : " + (height * width) + " square units" + newline + 
+		"Total Beepers Collected : " + count + newline + 
+		"Greatest number of beepers in a pile : " + greatest + newline + 
+		"Number of piles : " + pile + newline + 
+		"Average number of beepers per pile : " + (count/(float)pile) + newline + 
+		"Percentage dirty : " + ((pile/(float)(height * width))*100) + "%" + newline + 
+		"Location of largest pile : (" + xpos + ", " + ypos + ")" );
+	
 	}
 
 
