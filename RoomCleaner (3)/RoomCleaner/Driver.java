@@ -95,9 +95,7 @@ int Beeps = Integer.parseInt(tempBeeps);
 			
 			
 		}
-			roomba.turnLeft();
-			roomba.turnLeft();
-			roomba.turnLeft();
+			rightboi();
 		while (true) {
 			if (roomba.nextToABeeper()) 
 			{
@@ -164,7 +162,12 @@ int Beeps = Integer.parseInt(tempBeeps);
 		"Location of largest pile : (" + xpos + ", " + ypos + ")" );
 	
 	}
-
+public static void rightboi ()
+{
+			roomba.turnLeft();
+			roomba.turnLeft();
+			roomba.turnLeft();
+}
 
 	/** This method displays the results of cleaning the room.  All of the info
 	 * in the pdf that describes the problem need to be displayed.  You can present
